@@ -19,7 +19,7 @@ void check_end(char *end, char *inp_ask)
  * @tok_ask: tok_ask
  * @ags_ask: Arguments
  */
-void exec_child(char *tok_ask, char *ags_ask[])
+void exec_child(char *tok_ask, char *ags_ask[], char *inp_ask)
 {
 	int i = 0;
 
@@ -33,6 +33,7 @@ void exec_child(char *tok_ask, char *ags_ask[])
 
 	if (execve(ags_ask[0], ags_ask, NULL) == -1)
 	{
+		free(inp_ask);
 		perror("./hsh");
 		_exit(EXIT_FAILURE);
 	}
@@ -50,6 +51,7 @@ void create_ps(char *inp_ask)
 
 	if (child_ask == -1)
 	{
+		free(inp_ask);
 		perror("fork");
 		_exit(EXIT_FAILURE);
 	}
@@ -58,8 +60,11 @@ void create_ps(char *inp_ask)
 		char *tok_ask = strtok(inp_ask, " "), *ags_ask[1024];
 
 		if (tok_ask == NULL)
+		{
+			free(inp_ask);
 			_exit(EXIT_SUCCESS);
-		exec_child(tok_ask, ags_ask);
+		}
+		exec_child(tok_ask, ags_ask, inp_ask);
 	}
 	else
 	{

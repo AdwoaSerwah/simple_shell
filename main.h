@@ -18,7 +18,7 @@ extern char **environ;
 
 int _strlen(const char *s);
 void check_end(char *end, char *inp_ask);
-void exec_child(char *tok_ask, char *ags_ask[]);
+void exec_child(char *tok_ask, char *ags_ask[], char *inp_ask);
 void create_ps(char *inp_ask);
 int _strncmp(const char *str1, const char *str2, size_t num_sk);
 int print_str(char *str);
