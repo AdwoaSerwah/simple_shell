@@ -26,5 +26,6 @@ char *_getenv(const char *name);
 int _putchar(char c);
 char *get_path(const char *inp_ask, const char *path_ask);
 char *_strdup(const char *s1);
+int _strcmp(char *s1, char *s2);
 
 #endif /* MAIN_H */
