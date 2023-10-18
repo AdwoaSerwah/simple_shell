@@ -1,0 +1,10 @@
+#!/bin/bash
+
+pid_max_file="/proc/sys/kernel/pid_max"
+
+if [ -e "$pid_max_file" ]; then
+    pid_max=$(cat "$pid_max_file")
+    echo "Maximum Process ID (pid_max): $pid_max"
+else
+    echo "Error: $pid_max_file not found."
+fi

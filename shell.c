@@ -64,7 +64,7 @@ void create_ps(char *inp_ask)
 	{
 		int stat_ask;
 
-		waitpid(pid, &stat_ask, 0);
+		waitpid(child_ask, &stat_ask, 0);
 	}
 }
 
