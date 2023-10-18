@@ -2,13 +2,12 @@
 
 /**
  * check_end - Checks the end of the line
- * @input: Input
+ * @inp_ask: Input
  * @end: end
  */
-
-void check_end(char *end, char *input)
+void check_end(char *end, char *inp_ask)
 {
-	while (end >= input && (*end == '\n' || *end == ' ' || *end == '\t'))
+	while (end >= inp_ask && (*end == '\n' || *end == ' ' || *end == '\t'))
 	{
 		*end = '\0';
 		end--;
@@ -17,21 +16,21 @@ void check_end(char *end, char *input)
 
 /**
  * exec_child - Executes child process
- * @token: token
- * @args: Arguments
- * @arg: Argument
+ * @tok_ask: tok_ask
+ * @ags_ask: Arguments
  * @i: Index
  */
-void exec_child(char *token, char *args[], char *arg, int i)
+void exec_child(char *tok_ask, char *ags_ask[], int i)
 {
-	while (arg != NULL)
+	while (tok_ask != NULL)
 	{
-		args[i] = arg;
+		ags_ask[i] = tok_ask;
 		i++;
-		arg = strtok(NULL, " ");
+		tok_ask = strtok(NULL, " ");
 	}
-	args[i] = NULL;
-	if (execve(token, args, NULL) == -1)
+	ags_ask[i] = NULL;
+
+	if (execve(ags_ask[0], ags_ask, NULL) == -1)
 	{
 		perror("./hsh");
 		_exit(EXIT_FAILURE);
@@ -40,35 +39,32 @@ void exec_child(char *token, char *args[], char *arg, int i)
 
 /**
 * create_ps - Creates a new process
- * @input: Input
+ * @inp_ask: Input
  */
-void create_ps(char *input)
+void create_ps(char *inp_ask)
 {
-	pid_t pid;
+	pid_t child_ask;
 
-	pid = fork();
-	if (pid == -1)
+	child_ask = fork();
+	if (child_ask == -1)
 	{
 		perror("fork");
 		_exit(EXIT_FAILURE);
 	}
-	else if (pid == 0)
+	else if (child_ask == 0)
 	{
-		char *token = strtok(input, " "), *args[1024], *arg;
+		char *tok_ask = strtok(inp_ask, " "), *ags_ask[1024];
 		int i = 0;
 
-		if (token == NULL)
+		if (tok_ask == NULL)
 			_exit(EXIT_SUCCESS);
-		args[0] = token;
-		i = 1;
-		arg = strtok(NULL, " ");
-		exec_child(token, args, arg, i);
+		exec_child(tok_ask, ags_ask, i);
 	}
 	else
 	{
-		int status;
+		int stat_ask;
 
-		waitpid(pid, &status, 0);
+		waitpid(pid, &stat_ask, 0);
 	}
 }
 
@@ -79,25 +75,25 @@ void create_ps(char *input)
  */
 int main(void)
 {
-	char *input = NULL, *prompt = "($) ", newline = '\n', *end;
-	size_t input_size = 0;
-	int act = isatty(STDIN_FILENO);
+	char *inp_ask = NULL, *prmt_ask = "($) ", n_line_ask = '\n', *end;
+	size_t inp_sz = 0;
+	int act_ask = isatty(STDIN_FILENO);
 
 	while (1)
 	{
-		if (act)
-			write(STDOUT_FILENO, prompt, _strlen(prompt));
-		if (getline(&input, &input_size, stdin) == -1)
+		if (act_ask)
+			write(STDOUT_FILENO, prmt_ask, _strlen(prmt_ask));
+		if (getline(&inp_ask, &inp_sz, stdin) == -1)
 		{
-			if (act)
-				write(STDOUT_FILENO, &newline, 1);
+			if (act_ask)
+				write(STDOUT_FILENO, &n_line_ask, 1);
 			break;
 		}
-		end = input + _strlen(input) - 1;
-		check_end(end, input);
-		create_ps(input);
+		end = inp_ask + _strlen(inp_ask) - 1;
+		check_end(end, inp_ask);
+		create_ps(inp_ask);
 	}
 
-	free(input);
+	free(inp_ask);
 	return (0);
 }

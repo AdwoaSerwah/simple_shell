@@ -16,8 +16,8 @@
 #define NULL ((void *)0)
 
 int _strlen(const char *s);
-void check_end(char *end, char *input);
-void exec_child(char *token, char *args[], char *arg, int i);
-void create_ps(char *input);
+void check_end(char *end, char *inp_ask);
+void exec_child(char *tok_ask, char *ags_ask[], int i);
+void create_ps(char *inp_ask);
 
 #endif /* MAIN_H */
