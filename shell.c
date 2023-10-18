@@ -18,6 +18,7 @@ void check_end(char *end, char *inp_ask)
  * exec_child - Executes child process
  * @tok_ask: tok_ask
  * @ags_ask: Arguments
+ * @inp_ask: Input
  */
 void exec_child(char *tok_ask, char *ags_ask[], char *inp_ask)
 {
