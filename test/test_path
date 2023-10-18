@@ -1,0 +1,53 @@
+/**
+ * get_path - Handles path
+ * @inp_ask: User input
+ *
+ */
+char *get_path(const char *inp_ask, const char *path_ask)
+{
+        char *cmd = strtok(_strdup(inp_ask), " ");
+        char *folder = strtok(_strdup(path_ask), ":");
+
+        if (cmd == NULL)
+                return (NULL);
+        while(folder != NULL)
+        {
+                int i = 0;
+                char fpath[1024];
+
+                while (*folder != '\0')
+                {
+                        fpath[i] = *folder;
+                        folder++;
+                        i++;
+                }
+                fpath[i] = '/';
+                i++;
+                while (*cmd)
+                {
+                        fpath[i] = *cmd;
+                        i++;
+                        cmd++;
+                }
+                fpath[i] = '\0';
+
+                if (access(fpath, F_OK) == 0)
+                        return (_strdup(fpath));
+                folder = strtok(NULL, ":");
+        }
+        return (NULL);
+}
+in create_ps
+
+if (path_ask == NULL)
+        {
+                perror("_getenv");
+                _exit(EXIT_FAILURE);
+        }
+        fpath = get_path(inp_ask, path_ask);
+        if (fpath == NULL)
+        {
+                perror("path");
+                return;
+        }
+

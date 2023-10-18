@@ -18,10 +18,11 @@ void check_end(char *end, char *inp_ask)
  * exec_child - Executes child process
  * @tok_ask: tok_ask
  * @ags_ask: Arguments
- * @i: Index
  */
-void exec_child(char *tok_ask, char *ags_ask[], int i)
+void exec_child(char *tok_ask, char *ags_ask[])
 {
+	int i = 0;
+
 	while (tok_ask != NULL)
 	{
 		ags_ask[i] = tok_ask;
@@ -46,6 +47,7 @@ void create_ps(char *inp_ask)
 	pid_t child_ask;
 
 	child_ask = fork();
+
 	if (child_ask == -1)
 	{
 		perror("fork");
@@ -54,11 +56,10 @@ void create_ps(char *inp_ask)
 	else if (child_ask == 0)
 	{
 		char *tok_ask = strtok(inp_ask, " "), *ags_ask[1024];
-		int i = 0;
 
 		if (tok_ask == NULL)
 			_exit(EXIT_SUCCESS);
-		exec_child(tok_ask, ags_ask, i);
+		exec_child(tok_ask, ags_ask);
 	}
 	else
 	{
