@@ -1,5 +1,6 @@
 #include "main.h"
 
+
 /**
  * check_end - Checks the end of the line
  * @inp_ask: Input
@@ -62,6 +63,19 @@ void create_ps(char *inp_ask)
 
 		if (tok_ask == NULL)
 		{
+			free(inp_ask);
+			_exit(EXIT_SUCCESS);
+		}
+		if (_strcmp(tok_ask, "env") == 0)
+		{
+			char **env = environ;
+
+			while (*env != NULL)
+			{
+				print_str(*env);
+				_putchar('\n');
+				env++;
+			}
 			free(inp_ask);
 			_exit(EXIT_SUCCESS);
 		}
