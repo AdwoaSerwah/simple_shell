@@ -68,13 +68,13 @@ void create_ps(char *inp_ask)
 		}
 		if (_strcmp(tok_ask, "env") == 0)
 		{
-			char **env = environ;
+			char **env_sk = environ;
 
-			while (*env != NULL)
+			while (*env_sk != NULL)
 			{
-				print_str(*env);
+				print_str(*env_sk);
 				_putchar('\n');
-				env++;
+				env_sk++;
 			}
 			free(inp_ask);
 			_exit(EXIT_SUCCESS);
